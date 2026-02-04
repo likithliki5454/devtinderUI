@@ -5,7 +5,7 @@ function App() {
 
   return (
     <>
-     <h1>Welcome to DevvvTinder UI </h1>
+     <h1>Welcome tooo DevvvTinder UI </h1>
     </>
   )
 }
