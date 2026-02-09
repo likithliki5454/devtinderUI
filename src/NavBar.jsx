@@ -2,9 +2,9 @@ import React from 'react'
 
 const NavBar = () => {
   return (
-    <div>    <div className="navbar bg-base-300 ">
+    <div>    <div className="navbar bg-base-content  text-base-content text-neutral-content">
   <div className="flex-1">
-    <a className="btn btn-ghost text-xl">DevTinder</a>
+    <a className="text-xl">DevTinder</a>
   </div>
   <div className="flex gap-2">
     <div className="dropdown dropdown-end mx-5">
@@ -17,7 +17,7 @@ const NavBar = () => {
       </div>
       <ul
         tabIndex="-1"
-        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow text-base-content">
         <li>
           <a className="justify-between">
             Profile
