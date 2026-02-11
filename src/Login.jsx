@@ -1,9 +1,101 @@
-import React from 'react'
+import axios from "axios";
+import React, { useState } from "react";
 
 const Login = () => {
-  return (
-    <div>Login</div>
-  )
-}
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
 
-export default Login
+  const HandleLogin = async () => {
+    const newErrors = {};
+
+    if (!email.trim()) {
+      newErrors.email = "Email is required";
+    }
+
+    if (!password.trim()) {
+      newErrors.password = "Password is required";
+    }
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) return;
+
+    try{
+    const res=await axios.post("http://localhost:7777/login",  {
+    emailId: email,   
+    password: password
+  })
+    console.log(res.data)
+    }
+      catch(err){   
+        console.log(err)
+      if(err.response && err.response.data && err.response.data.message){
+        alert(err.response.data.message)
+      }
+
+    }
+
+
+
+  };
+
+  return (
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="card w-96 bg-blue-100 card-sm shadow-sm">
+        <div className="card-body">
+          <h2 className="card-title">Login</h2>
+
+          {/* Email */}
+          <fieldset className="fieldset w-full">
+            <p className="fieldset-legend">Email Id</p>
+            <input
+              type="text"
+              className={`input w-full p-5 ${
+                errors.email ? "border-red-500" : ""
+              }`}
+              placeholder="Type here"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setErrors({ ...errors, email: "" });
+              }}
+            />
+            {errors.email && (
+              <p className="text-red-600 text-sm mt-1">{errors.email}</p>
+            )}
+          </fieldset>
+
+          {/* Password */}
+          <fieldset className="fieldset w-full">
+            <p className="fieldset-legend">Password</p>
+            <input
+              type="password"
+              className={`input w-full p-5 ${
+                errors.password ? "border-red-500" : ""
+              }`}
+              placeholder="Type here"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setErrors({ ...errors, password: "" });
+              }}
+            />
+            {errors.password && (
+              <p className="text-red-600 text-sm mt-1">{errors.password}</p>
+            )}
+          </fieldset>
+
+          <div className="card-actions mt-4">
+            <button
+              className="btn w-full bg-amber-800 hover:bg-amber-900 text-white border-none"
+              onClick={HandleLogin}
+            >
+              Login
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Login;
