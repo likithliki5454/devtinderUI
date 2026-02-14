@@ -1,11 +1,14 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Body from "./Body";
 import Prifile from "./Prifile";
-import Login from "./Login";
+import Login from "./Components/Authpages/Login";
+import { Provider } from "react-redux";
+import appstore from "./Components/utils/appStore";
 
 function App() {
   return (
     <>
+    <Provider store={appstore}>
     <BrowserRouter basename="/">
     <Routes>
       <Route path="/" element={<Body/>}>
@@ -14,7 +17,7 @@ function App() {
       </Route>
       </Routes>    
     </BrowserRouter>
-
+    </Provider>
     </>
   );
 }

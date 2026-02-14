@@ -1,10 +1,17 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser } from "../utils/userSlice";
+import { useNavigate } from "react-router-dom";
+import { API_URL } from "../utils/constants";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("likipinky@gmail.com");
+  const [password, setPassword] = useState("1057@Liki");
   const [errors, setErrors] = useState({});
+  const dispatch=useDispatch();
+  const navigate=useNavigate();
+
 
   const HandleLogin = async () => {
     const newErrors = {};
@@ -19,23 +26,17 @@ const Login = () => {
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
 
-    try{
-    const res=await axios.post("http://localhost:7777/login",  {
-    emailId: email,   
-    password: password
-  })
-    console.log(res.data)
+    try {
+      const res = await axios.post(`${API_URL}/login`, {
+        emailId: email,
+        password: password,
+      });
+      console.log(res.data);
+      dispatch(addUser(res.data))
+      navigate('/')
+    } catch (err) {
+      console.log(err);
     }
-      catch(err){   
-        console.log(err)
-      if(err.response && err.response.data && err.response.data.message){
-        alert(err.response.data.message)
-      }
-
-    }
-
-
-
   };
 
   return (
