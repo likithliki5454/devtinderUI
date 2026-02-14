@@ -8,34 +8,22 @@ import { API_URL } from "../utils/constants";
 const Login = () => {
   const [email, setEmail] = useState("likipinky@gmail.com");
   const [password, setPassword] = useState("1057@Liki");
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState("");
   const dispatch=useDispatch();
   const navigate=useNavigate();
 
 
   const HandleLogin = async () => {
-    const newErrors = {};
-
-    if (!email.trim()) {
-      newErrors.email = "Email is required";
-    }
-
-    if (!password.trim()) {
-      newErrors.password = "Password is required";
-    }
-    setErrors(newErrors);
-    if (Object.keys(newErrors).length > 0) return;
-
     try {
       const res = await axios.post(`${API_URL}/login`, {
         emailId: email,
         password: password,
-      });
+      }, {withCredentials:true});
       console.log(res.data);
       dispatch(addUser(res.data))
       navigate('/')
     } catch (err) {
-      console.log(err);
+      setErrors(err.response.data.message);
     }
   };
 
@@ -50,19 +38,13 @@ const Login = () => {
             <p className="fieldset-legend">Email Id</p>
             <input
               type="text"
-              className={`input w-full p-5 ${
-                errors.email ? "border-red-500" : ""
-              }`}
+              className='input w-full p-5'
               placeholder="Type here"
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
-                setErrors({ ...errors, email: "" });
               }}
             />
-            {errors.email && (
-              <p className="text-red-600 text-sm mt-1">{errors.email}</p>
-            )}
           </fieldset>
 
           {/* Password */}
@@ -71,17 +53,16 @@ const Login = () => {
             <input
               type="password"
               className={`input w-full p-5 ${
-                errors.password ? "border-red-500" : ""
+                errors ? "border-red-500" : ""
               }`}
               placeholder="Type here"
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
-                setErrors({ ...errors, password: "" });
               }}
             />
-            {errors.password && (
-              <p className="text-red-600 text-sm mt-1">{errors.password}</p>
+            {errors && (
+              <p className="text-red-600 text-sm mt-1">{errors}</p>
             )}
           </fieldset>
 
