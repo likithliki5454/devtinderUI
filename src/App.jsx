@@ -4,14 +4,16 @@ import Prifile from "./Prifile";
 import Login from "./Components/Authpages/Login";
 import { Provider } from "react-redux";
 import appstore from "./Components/utils/appStore";
-
+import FeedPage from "./Components/FeedPage";
+import { ToastContainer } from "react-toastify";
 function App() {
   return (
-    <>
+    <><ToastContainer position="top-right" autoClose={3000} />
     <Provider store={appstore}>
     <BrowserRouter basename="/">
     <Routes>
       <Route path="/" element={<Body/>}>
+      <Route path="/" element={<FeedPage/>} />
       <Route path="/login" element={<Login/>}/>
       <Route path="/profile" element={<Prifile/>}/>
       </Route>
