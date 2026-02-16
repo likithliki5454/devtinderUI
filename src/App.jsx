@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import appstore from "./Components/utils/appStore";
 import FeedPage from "./Components/FeedPage";
 import { ToastContainer } from "react-toastify";
+import ChangePassword from "./Components/ChangePassword";
 function App() {
   return (
     <><ToastContainer position="top-right" autoClose={3000} />
@@ -16,6 +17,7 @@ function App() {
       <Route path="/" element={<FeedPage/>} />
       <Route path="/login" element={<Login/>}/>
       <Route path="/profile" element={<Prifile/>}/>
+      <Route path='/change-password' element={<ChangePassword/>}/>
       </Route>
       </Routes>    
     </BrowserRouter>
