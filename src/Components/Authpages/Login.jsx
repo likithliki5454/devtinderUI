@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { API_URL } from "../utils/constants";
 
 const Login = () => {
-  const [email, setEmail] = useState("likipinky@gmail.com");
-  const [password, setPassword] = useState("1057@Liki");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
   const dispatch=useDispatch();
   const navigate=useNavigate();
@@ -31,6 +31,7 @@ const Login = () => {
     <div className="flex justify-center items-center min-h-screen">
       <div className="card w-96 bg-blue-100 card-sm shadow-sm">
         <div className="card-body">
+          <h1>first Fullstack App by Likith </h1>
           <h2 className="card-title">Login</h2>
 
           {/* Email */}
