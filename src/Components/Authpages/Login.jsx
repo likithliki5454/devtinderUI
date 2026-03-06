@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../utils/constants";
@@ -9,73 +9,98 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
-  const dispatch=useDispatch();
-  const navigate=useNavigate();
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const HandleLogin = async () => {
     try {
-      const res = await axios.post(`${API_URL}/login`, {
-        emailId: email,
-        password: password,
-      }, {withCredentials:true});
-      console.log(res.data);
-      dispatch(addUser(res.data))
-      navigate('/')
+      const res = await axios.post(
+        `${API_URL}/login`,
+        {
+          emailId: email,
+          password: password,
+        },
+        { withCredentials: true }
+      );
+
+      dispatch(addUser(res.data));
+      navigate("/");
     } catch (err) {
-      setErrors(err.response.data.message);
+      setErrors(err?.response?.data?.message || "Login failed");
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <div className="card w-96 bg-blue-100 card-sm shadow-sm">
-        <div className="card-body">
-          <h1>first Fullstack App by Likith </h1>
-          <h2 className="card-title">Login</h2>
+    <div className="flex justify-center items-center min-h-screen
+    bg-gradient-to-br from-indigo-100 via-white to-purple-100
+    dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
 
-          {/* Email */}
-          <fieldset className="fieldset w-full">
-            <p className="fieldset-legend">Email Id</p>
-            <input
-              type="text"
-              className='input w-full p-5'
-              placeholder="Type here"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-            />
-          </fieldset>
+      <div className="w-96 p-6 rounded-2xl shadow-xl
+      bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
 
-          {/* Password */}
-          <fieldset className="fieldset w-full">
-            <p className="fieldset-legend">Password</p>
-            <input
-              type="password"
-              className={`input w-full p-5 ${
-                errors ? "border-red-500" : ""
-              }`}
-              placeholder="Type here"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
-            {errors && (
-              <p className="text-red-600 text-sm mt-1">{errors}</p>
-            )}
-          </fieldset>
+        <h1 className="text-center text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">
+          DevTinder
+        </h1>
 
-          <div className="card-actions mt-4">
-            <button
-              className="btn w-full bg-amber-800 hover:bg-amber-900 text-white border-none"
-              onClick={HandleLogin}
-            >
-              Login
-            </button>
-          </div>
+        <h2 className="text-lg font-medium text-gray-600 dark:text-gray-300 mb-4">
+          Login
+        </h2>
+
+        {/* Email */}
+        <div className="mb-4">
+          <label className="text-sm text-gray-600 dark:text-gray-300">
+            Email
+          </label>
+
+          <input
+            type="text"
+            className="mt-1 w-full px-4 py-2 rounded-lg border
+            border-gray-300 dark:border-gray-600
+            bg-white dark:bg-gray-700
+            text-gray-800 dark:text-gray-100
+            focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            placeholder="Enter email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
+
+        {/* Password */}
+        <div className="mb-2">
+          <label className="text-sm text-gray-600 dark:text-gray-300">
+            Password
+          </label>
+
+          <input
+            type="password"
+            className={`mt-1 w-full px-4 py-2 rounded-lg border
+            ${
+              errors
+                ? "border-red-500"
+                : "border-gray-300 dark:border-gray-600"
+            }
+            bg-white dark:bg-gray-700
+            text-gray-800 dark:text-gray-100
+            focus:outline-none focus:ring-2 focus:ring-indigo-500`}
+            placeholder="Enter password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          {errors && (
+            <p className="text-red-500 text-sm mt-1">{errors}</p>
+          )}
+        </div>
+
+        {/* Button */}
+        <button
+          className="w-full mt-4 py-2 rounded-lg font-medium
+          bg-indigo-600 hover:bg-indigo-700
+          text-white transition duration-200"
+          onClick={HandleLogin}
+        >
+          Login
+        </button>
       </div>
     </div>
   );
