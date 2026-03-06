@@ -39,7 +39,7 @@ const Login = () => {
       bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
 
         <h1 className="text-center text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">
-          DevTinder
+          Likith's APPs
         </h1>
 
         <h2 className="text-lg font-medium text-gray-600 dark:text-gray-300 mb-4">
